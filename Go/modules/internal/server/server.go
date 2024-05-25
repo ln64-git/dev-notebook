@@ -10,25 +10,27 @@ import (
 	"github.com/dev/go/modules/internal/types"
 )
 
-func StartServer(state types.AppState) {
+// StartServer starts the HTTP server on the specified port.
+func StartServer(state types.ServerState) {
 	port := state.Port
-	fmt.Printf("Starting server on port %d", port)
+	state.Logger.Infof("Starting server on port %d", port)
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		fmt.Fprint(w, "Server is running")
+		state.Logger.Info(w, "Server is running")
 	})
 
 	addr := ":" + strconv.Itoa(port)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
-		fmt.Printf("Failed to start server: %v", err)
+		state.Logger.Info("Failed to start server: %v\n", err)
 	}
 }
 
+// CheckServerRunning checks if the server is already running on the specified port.
 func CheckServerRunning(port int) bool {
 	timeout := 2 * time.Second
 	conn, err := net.DialTimeout("tcp", fmt.Sprintf(":%d", port), timeout)
@@ -39,13 +41,13 @@ func CheckServerRunning(port int) bool {
 	return true
 }
 
-func ConnectToServer(port int) {
-	fmt.Printf("Connected to the server on port %d.\n", port)
+// ConnectToServer connects to the server on the specified port and returns a boolean indicating success or failure.
+func ConnectToServer(port int) bool {
 	resp, err := http.Get(fmt.Sprintf("http://localhost:%d/status", port))
 	if err != nil {
 		fmt.Printf("Failed to connect to the server: %v\n", err)
-		return
+		return false
 	}
 	defer resp.Body.Close()
-	fmt.Printf("Server response: %s\n", resp.Status)
+	return resp.StatusCode == http.StatusOK
 }

@@ -1,26 +1,49 @@
 package log
 
 import (
-	"log"
 	"os"
+	"path/filepath"
+	"time"
+
+	charmlog "github.com/charmbracelet/log"
 )
 
-var Logger *log.Logger
+type Logger struct {
+	*charmlog.Logger
+}
 
-func InitLogger() error {
-	// Create the logs directory if it doesn't exist
-	err := os.MkdirAll("logs", 0755)
-	if err != nil {
-		return err
+// Config defines the structure for log configuration settings.
+type Config struct {
+	LogDir  string // Directory to save log files
+	LogFile string // Log file name
+}
+
+// InitLogger initializes and returns a logger with the given configuration.
+func InitLogger(cfg Config) (*Logger, error) { // Ensure the log directory exists.
+	if err := os.MkdirAll(cfg.LogDir, 0755); err != nil {
+		return nil, err
 	}
 
-	// Open the log file
-	logFile, err := os.OpenFile("logs/server.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	// Create the full path to the log file.
+	logFilePath := filepath.Join(cfg.LogDir, cfg.LogFile)
+	logFile, err := os.OpenFile(logFilePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	// Create the logger
-	Logger = log.New(logFile, "", log.LstdFlags|log.Lshortfile)
-	return nil
+	logger := &Logger{Logger: charmlog.NewWithOptions(logFile, charmlog.Options{
+		ReportCaller:    true,
+		ReportTimestamp: true,
+		TimeFormat:      time.DateTime,
+	})}
+
+	return logger, nil
+}
+
+// DefaultConfig provides a default logging configuration.
+func DefaultConfig() Config {
+	return Config{
+		LogDir:  "logs",
+		LogFile: "app.log",
+	}
 }

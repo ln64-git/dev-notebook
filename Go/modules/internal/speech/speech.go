@@ -14,7 +14,7 @@ type SpeechRequest struct {
 	VoiceName string `json:"voiceName"`
 }
 
-func (r SpeechRequest) ToJSON() string {
+func (r SpeechRequest) SpeechRequestToJSON() string {
 	return fmt.Sprintf(`{"text":"%s","gender":"%s","voiceName":"%s"}`, r.Text, r.Gender, r.VoiceName)
 }
 
@@ -54,4 +54,11 @@ func parseBreathFromText(text string) []string {
 	}
 
 	return sentences
+}
+
+func SanitizeInput(input string) (string, error) {
+	var req SpeechRequest
+
+	fmt.Printf("text: %s", req.Text)
+	return req.Text, nil
 }

@@ -6,7 +6,6 @@ import (
 	"sync"
 	"time"
 
-	"github.com/dev/go/modules/internal/log"
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/speaker"
 	"github.com/faiface/beep/wav"
@@ -44,9 +43,6 @@ func (ap *AudioPlayer) playNextAudioChunk() {
 	ap.mutex.Lock()
 	defer ap.mutex.Unlock()
 
-	log.InitLogger()
-	defer log.Logger.Writer()
-
 	if len(ap.audioQueue) == 0 {
 		// Entire queue is finished, signal completion
 		ap.isAudioPlaying = false
@@ -62,7 +58,6 @@ func (ap *AudioPlayer) playNextAudioChunk() {
 
 	audioStreamer, format, err := wav.Decode(audioReadCloser)
 	if err != nil {
-		log.Logger.Printf("Failed to decode WAV data: %v\n", err)
 		ap.playNextAudioChunkIfAvailable()
 		return
 	}
@@ -72,7 +67,6 @@ func (ap *AudioPlayer) playNextAudioChunk() {
 		ap.audioFormat = format
 		err = speaker.Init(ap.audioFormat.SampleRate, ap.audioFormat.SampleRate.N(time.Second/10))
 		if err != nil {
-			log.Logger.Println("Failed to initialize speaker: \n", err)
 			ap.playNextAudioChunkIfAvailable()
 			return
 		}
