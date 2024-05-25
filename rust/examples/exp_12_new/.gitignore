@@ -1,0 +1,4 @@
+./_application/.next
+./_application/target
+./_application/.env
+./_application/node_modules

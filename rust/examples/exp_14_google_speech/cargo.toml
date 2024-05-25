@@ -1,0 +1,2 @@
+[workspace]
+members = ["./_core/", "./_application/src-tauri/"]

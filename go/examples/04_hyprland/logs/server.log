@@ -1,0 +1,6 @@
+2024/05/23 21:44:27 main.go:22: main - Program Started
+2024/05/23 21:44:27 server.go:28: Starting server on port 8080
+2024/05/23 21:44:35 main.go:22: main - Program Started
+2024/05/23 21:44:35 main.go:37: Server is already running on port 8080. Connecting to the existing server...
+2024/05/23 21:44:35 server.go:92: Connected to the server on port 8080.
+2024/05/23 21:44:35 server.go:99: Server response: 200 OK

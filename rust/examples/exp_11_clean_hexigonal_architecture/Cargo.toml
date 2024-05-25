@@ -1,0 +1,10 @@
+[workspace]
+
+members = [
+    "_interface",
+    "_application/src-tauri",
+    "_core",
+    # "memory",
+    # "tauri",
+    # "tests"
+]

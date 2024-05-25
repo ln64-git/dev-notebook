@@ -1,0 +1,28 @@
+2024/05/24 19:30:13 voxctl.go:29: main - Program Started
+2024/05/24 19:30:13 voxctl.go:37: Flags: token='', status=false, quit=false
+2024/05/24 19:30:13 voxctl.go:97: Server is already running on port 8080. Connecting to the existing server...
+2024/05/24 19:30:13 server.go:90: Connected to the server on port 8080.
+2024/05/24 19:30:13 server.go:97: Server response: 200 OK
+2024/05/24 19:30:25 voxctl.go:110: Program Exiting
+2024/05/24 19:41:55 voxctl.go:29: main - Program Started
+2024/05/24 19:41:55 voxctl.go:37: Flags: token='', status=false, quit=false
+2024/05/24 19:41:55 voxctl.go:97: Server is already running on port 8080. Connecting to the existing server...
+2024/05/24 19:41:55 server.go:90: Connected to the server on port 8080.
+2024/05/24 19:41:55 server.go:97: Server response: 200 OK
+2024/05/24 19:44:12 voxctl.go:29: main - Program Started
+2024/05/24 19:44:12 voxctl.go:37: Flags: token='', status=false, quit=false
+2024/05/24 19:44:12 voxctl.go:97: Server is already running on port 8080. Connecting to the existing server...
+2024/05/24 19:44:12 server.go:90: Connected to the server on port 8080.
+2024/05/24 19:44:12 server.go:97: Server response: 200 OK
+2024/05/25 05:00:55 voxctl.go:110: Program Exiting
+2024/05/25 05:00:56 voxctl.go:29: main - Program Started
+2024/05/25 05:00:56 voxctl.go:37: Flags: token='', status=false, quit=false
+2024/05/25 05:00:56 voxctl.go:97: Server is already running on port 8080. Connecting to the existing server...
+2024/05/25 05:00:56 server.go:90: Connected to the server on port 8080.
+2024/05/25 05:00:56 server.go:97: Server response: 200 OK
+2024/05/25 05:01:03 voxctl.go:29: main - Program Started
+2024/05/25 05:01:08 voxctl.go:29: main - Program Started
+2024/05/25 05:01:08 voxctl.go:37: Flags: token='', status=false, quit=false
+2024/05/25 05:01:08 voxctl.go:97: Server is already running on port 8080. Connecting to the existing server...
+2024/05/25 05:01:08 server.go:90: Connected to the server on port 8080.
+2024/05/25 05:01:08 server.go:97: Server response: 200 OK
