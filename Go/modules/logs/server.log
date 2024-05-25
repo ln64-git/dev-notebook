@@ -1,0 +1,13 @@
+2024/05/24 18:17:27 voxctl.go:30: main - Program Started
+2024/05/24 18:17:27 voxctl.go:41: Flags: token='', input='', status=false, quit=false, pause=false, stop=false
+2024/05/24 18:17:27 voxctl.go:70: Server is already running on port 8080. Connecting to the existing server...
+2024/05/24 18:17:27 server.go:130: Connected to the server on port 8080.
+2024/05/24 18:17:27 server.go:137: Server response: 200 OK
+2024/05/24 18:17:34 voxctl.go:30: main - Program Started
+2024/05/24 18:17:34 voxctl.go:41: Flags: token='', input='something', status=false, quit=false, pause=false, stop=false
+2024/05/24 18:17:34 voxctl.go:70: Server is already running on port 8080. Connecting to the existing server...
+2024/05/24 18:17:34 server.go:130: Connected to the server on port 8080.
+2024/05/24 18:17:34 server.go:137: Server response: 200 OK
+2024/05/24 18:17:34 voxctl.go:102: Input requested.
+2024/05/24 18:17:35 voxctl.go:115: Input response: 200 OK
+2024/05/24 18:17:39 voxctl.go:83: Program Exiting
