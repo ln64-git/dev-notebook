@@ -7,26 +7,27 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/charmbracelet/log"
 	"github.com/dev/go/modules/internal/types"
 )
 
 // StartServer starts the HTTP server on the specified port.
 func StartServer(state types.ServerState) {
 	port := state.Port
-	state.Logger.Infof("Starting server on port %d", port)
+	log.Infof("Starting server on port %d", port)
 	http.HandleFunc("/status", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		state.Logger.Infof("Server is running")
+		log.Infof("Server is running")
 	})
 
 	addr := ":" + strconv.Itoa(port)
 	err := http.ListenAndServe(addr, nil)
 	if err != nil {
-		state.Logger.Info("Failed to start server: %v\n", err)
+		log.Infof("Failed to start server: %v", err)
 	}
 }
 
@@ -41,13 +42,14 @@ func CheckServerRunning(port int) bool {
 	return true
 }
 
-// ConnectToServer connects to the server on the specified port and returns a boolean indicating success or failure.
-func ConnectToServer(port int) bool {
+// ConnectToServer connects to the server on the specified port and returns the response or an error.
+func ConnectToServer(port int) (*http.Response, error) {
 	resp, err := http.Get(fmt.Sprintf("http://localhost:%d/status", port))
 	if err != nil {
-		fmt.Printf("Failed to connect to the server: %v\n", err)
-		return false
+		return nil, fmt.Errorf("failed to connect to the server: %v", err)
 	}
-	defer resp.Body.Close()
-	return resp.StatusCode == http.StatusOK
+	if resp.StatusCode != http.StatusOK {
+		return resp, fmt.Errorf("unexpected status code: %d", resp.StatusCode)
+	}
+	return resp, nil
 }

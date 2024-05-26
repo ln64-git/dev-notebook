@@ -6,6 +6,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/charmbracelet/log"
 	"github.com/faiface/beep"
 	"github.com/faiface/beep/speaker"
 	"github.com/faiface/beep/wav"
@@ -28,6 +29,17 @@ func NewAudioPlayer() *AudioPlayer {
 }
 
 func (ap *AudioPlayer) Play(audioData []byte) {
+	if ap == nil {
+		log.Error("AudioPlayer is nil")
+		return
+	}
+
+	defer func() {
+		if r := recover(); r != nil {
+			log.Errorf("Recovered from panic: %v", r)
+		}
+	}()
+
 	ap.mutex.Lock()
 	defer ap.mutex.Unlock()
 
@@ -58,6 +70,7 @@ func (ap *AudioPlayer) playNextAudioChunk() {
 
 	audioStreamer, format, err := wav.Decode(audioReadCloser)
 	if err != nil {
+		log.Errorf("Error decoding audio data: %v", err)
 		ap.playNextAudioChunkIfAvailable()
 		return
 	}
@@ -67,6 +80,7 @@ func (ap *AudioPlayer) playNextAudioChunk() {
 		ap.audioFormat = format
 		err = speaker.Init(ap.audioFormat.SampleRate, ap.audioFormat.SampleRate.N(time.Second/10))
 		if err != nil {
+			log.Errorf("Error initializing speaker: %v", err)
 			ap.playNextAudioChunkIfAvailable()
 			return
 		}

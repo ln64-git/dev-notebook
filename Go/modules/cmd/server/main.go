@@ -9,19 +9,12 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/dev/go/modules/internal/log"
+	"github.com/charmbracelet/log"
 	"github.com/dev/go/modules/internal/server"
 	"github.com/dev/go/modules/internal/types"
-	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	// Initialize the logger with default configuration
-	cfg := log.DefaultConfig()
-	logger, err := log.InitLogger(cfg)
-	if err != nil {
-		logrus.Fatalf("could not initialize logger: %v", err)
-	}
 
 	flagPort := flag.Int("port", 8080, "Port number to connect or serve")
 	flag.Parse()
@@ -31,29 +24,31 @@ func main() {
 	state := types.ServerState{
 		Port:                 *flagPort,
 		ServerAlreadyRunning: serverAlreadyRunning,
-		Logger:               logger,
 	}
-	if !serverAlreadyRunning {
+
+	// Check if server is already running
+	if !server.CheckServerRunning(state.Port) {
 		go server.StartServer(state)
 	} else {
-		if server.ConnectToServer(state.Port) {
-			state.Logger.Infof("Connected to the existing server on port %d.", state.Port)
+		resp, err := server.ConnectToServer(state.Port)
+		if err != nil {
+			log.Errorf("Failed to connect to the existing server on port %d: %v", state.Port, err)
 		} else {
-			state.Logger.Errorf("Failed to connect to the existing server on port %d.", state.Port)
+			log.Infof("Connected to the existing server on port %d. Status: %s", state.Port, resp.Status)
+			resp.Body.Close()
 		}
 	}
 
 	processRequest(state)
-
 	if state.QuitRequested {
-		state.Logger.Info("Quit flag requested, Program Exiting")
+		log.Info("Quit flag requested, Program Exiting")
 		return
 	}
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	state.Logger.Info("Program Exiting")
+	log.Info("Program Exiting")
 }
 
 func processRequest(state types.ServerState) {
@@ -61,14 +56,14 @@ func processRequest(state types.ServerState) {
 
 	switch {
 	case state.StatusRequested:
-		state.Logger.Info("Status requested.")
+		log.Info("Status requested.")
 		resp, err := client.Get(fmt.Sprintf("http://localhost:%d/status", state.Port))
 		if err != nil {
-			state.Logger.Errorf("Failed to get status: %v\n", err)
+			log.Errorf("Failed to get status: %v\n", err)
 			return
 		}
 		defer resp.Body.Close()
 		body, _ := io.ReadAll(resp.Body)
-		state.Logger.Infof("Status response: %s\n", string(body))
+		log.Infof("Status response: %s\n", string(body))
 	}
 }

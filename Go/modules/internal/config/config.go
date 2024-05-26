@@ -46,3 +46,13 @@ func readConfig(configFile string, cfg *map[string]interface{}) error {
 
 	return nil
 }
+
+// GetStringOrDefault retrieves a string value from the configuration map, or returns a default value if the key is not present or the value is not a string.
+func GetStringOrDefault(cfg map[string]interface{}, key string, defaultValue string) string {
+	if value, ok := cfg[key]; ok {
+		if strValue, ok := value.(string); ok {
+			return strValue
+		}
+	}
+	return defaultValue
+}
