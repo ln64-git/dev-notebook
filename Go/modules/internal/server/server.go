@@ -20,7 +20,7 @@ func StartServer(state types.ServerState) {
 			return
 		}
 		w.WriteHeader(http.StatusOK)
-		state.Logger.Info(w, "Server is running")
+		state.Logger.Infof("Server is running")
 	})
 
 	addr := ":" + strconv.Itoa(port)
