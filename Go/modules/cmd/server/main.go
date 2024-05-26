@@ -22,7 +22,6 @@ func main() {
 	if err != nil {
 		logrus.Fatalf("could not initialize logger: %v", err)
 	}
-	logger.Info("Logger initialized successfully with default configuration")
 
 	flagPort := flag.Int("port", 8080, "Port number to connect or serve")
 	flag.Parse()
@@ -30,9 +29,9 @@ func main() {
 	serverAlreadyRunning := server.CheckServerRunning(*flagPort)
 
 	state := types.ServerState{
-		Logger:               logger,
 		Port:                 *flagPort,
 		ServerAlreadyRunning: serverAlreadyRunning,
+		Logger:               logger,
 	}
 	if !serverAlreadyRunning {
 		go server.StartServer(state)

@@ -4,11 +4,11 @@ import "github.com/dev/go/modules/internal/log"
 
 // ServerState struct to hold program state
 type ServerState struct {
-	Logger               *log.Logger
 	Port                 int
 	StatusRequested      bool
 	QuitRequested        bool
 	ServerAlreadyRunning bool
+	Logger               *log.Logger
 }
 
 type SpeechRequest struct {
