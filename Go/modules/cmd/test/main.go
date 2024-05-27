@@ -5,21 +5,30 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/dev/go/modules/internal/log"
+	"github.com/charmbracelet/log"
+	"github.com/dev/go/modules/external/ollama"
 )
 
 func main() {
-	// Initialize the logger with default configuration
-	cfg := log.DefaultConfig()
-	logger, err := log.InitLogger(cfg) // Pass the address of cfg
+	log.Info("Program started")
+
+	model := "llama2-uncensored"
+	prompt := "give me three sentences."
+	port := 11434
+
+	tokenChan, err := ollama.GetOllamaTokenResponse(model, prompt, port)
 	if err != nil {
-		println("Error initializing logger:", err)
-		os.Exit(1)
+		log.Fatal(err)
 	}
-	logger.Info("Program started")
+
+	go func() {
+		for token := range tokenChan {
+			log.Info(token)
+		}
+	}()
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
-	logger.Info("Program Exiting")
+	log.Info("Program exiting")
 }
