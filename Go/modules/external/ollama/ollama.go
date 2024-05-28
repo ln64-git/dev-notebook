@@ -17,25 +17,19 @@ type OllamaResponse struct {
 	DoneReason string `json:"done_reason,omitempty"`
 }
 
-// GetOllamaTokenResponse generates a response token from the Ollama model based on the provided prompt.
-// It returns a channel that streams the response tokens and any encountered error.
-//
-// Parameters:
-//   - model: The name of the Ollama model to use for generation.
-//   - prompt: The input prompt to generate the response.
-//   - port: The port on which the Ollama API is running.
-//
-// Returns:
-//   - A channel of strings streaming the response tokens.
-//   - An error, if any occurs during the request creation or execution.
-func GetOllamaTokenResponse(model string, prompt string, port int) (<-chan string, error) {
+// GetOllamaTokenResponse generates a response token from Ollama.
+// returns a channel that streams the response tokens and any encountered error.
+func GetOllamaTokenResponse(model string, prompt string, port ...int) (<-chan string, error) {
 	// Set default port if not provided
-	if port == 0 {
-		port = 11434
+	var portValue int
+	if len(port) > 0 {
+		portValue = port[0]
+	} else {
+		portValue = 11434
 	}
 
 	// Prepare the request URL and payload
-	url := fmt.Sprintf("http://localhost:%d/api/generate", port)
+	url := fmt.Sprintf("http://localhost:%d/api/generate", portValue)
 	payload := strings.NewReader(fmt.Sprintf(`{"model": "%s","prompt":"%s"}`, model, prompt))
 
 	// Create a new HTTP POST request

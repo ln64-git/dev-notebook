@@ -12,11 +12,10 @@ import (
 func main() {
 	log.Info("Program started")
 
-	model := "llama2-uncensored"
-	prompt := "give me three sentences."
-	port := 11434
+	model := "llama3"
+	prompt := "give me a three sentence poem."
 
-	tokenChan, err := ollama.GetOllamaTokenResponse(model, prompt, port)
+	tokenChan, err := ollama.GetOllamaTokenResponse(model, prompt)
 	if err != nil {
 		log.Fatal(err)
 	}
