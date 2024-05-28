@@ -7,12 +7,13 @@ import (
 
 	"github.com/charmbracelet/log"
 	"github.com/dev/go/modules/external/ollama"
+	"github.com/dev/go/modules/internal/speech"
 )
 
 func main() {
 	log.Info("Program started")
 
-	model := "llama3"
+	model := "llama2-uncensored"
 	prompt := "give me a three sentence poem."
 
 	tokenChan, err := ollama.GetOllamaTokenResponse(model, prompt)
@@ -20,9 +21,12 @@ func main() {
 		log.Fatal(err)
 	}
 
+	sentenceChan := make(chan string)
+	go speech.SegmentTextFromChannel(tokenChan, sentenceChan)
+
 	go func() {
-		for token := range tokenChan {
-			log.Info(token)
+		for sentence := range sentenceChan {
+			log.Info(sentence)
 		}
 	}()
 

@@ -4,6 +4,7 @@ package speech
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/dev/go/modules/external/azure"
 	"github.com/dev/go/modules/internal/audio"
@@ -20,7 +21,7 @@ func (r SpeechRequest) SpeechRequestToJSON() string {
 }
 
 func ProcessSpeech(logger *log.Logger, req SpeechRequest, azureSubscriptionKey, azureRegion string, audioPlayer *audio.AudioPlayer) error {
-	segments := getSegmentedText(req.Text)
+	segments := SegmentedText(req.Text)
 	for _, segment := range segments {
 		audioData, err := azure.SynthesizeSpeech(azureSubscriptionKey, azureRegion, segment, req.Gender, req.VoiceName)
 		if err != nil {
@@ -31,7 +32,21 @@ func ProcessSpeech(logger *log.Logger, req SpeechRequest, azureSubscriptionKey, 
 	return nil
 }
 
-func getSegmentedText(text string) []string {
+func SegmentTextFromChannel(tokenChan <-chan string, sentenceChan chan<- string) {
+	defer close(sentenceChan)
+	var builder strings.Builder
+
+	for token := range tokenChan {
+		builder.WriteString(token)
+		if strings.ContainsAny(token, ",.!?") {
+			sentence := builder.String()
+			sentenceChan <- sentence
+			builder.Reset()
+		}
+	}
+}
+
+func SegmentedText(text string) []string {
 	var sentences []string
 	var currentSentence string
 
