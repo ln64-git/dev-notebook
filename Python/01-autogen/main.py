@@ -21,7 +21,7 @@ def main():
 
     user_proxy = UserProxyAgent(
         "user_proxy",
-        code_execution_config={"executor": autogen.coding.LocalCommandLineCodeExecutor(work_dir="coding")},
+        code_execution_config={"executor": autogen.coding.LocalCommandLineCodeExecutor(work_dir=".cache")},
     )
 
     # Start the chat
