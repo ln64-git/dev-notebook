@@ -1,0 +1,86 @@
+# Byte-compiled / optimized / DLL files
+__init__/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.eggs/
+*.egg-info/
+dist/
+build/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+
+# IDE / text editor specific
+# Choose one or more based on your IDE:
+.idea/
+.vscode/
+.spyderproject/
+.mypy_cache/
+.pytest_cache/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+
+# Temporary data/backups
+*.bak
+*.swp
+*.swo
+
+# Virtualenv
+.venv/
+env/
+venv/
+ENV/
+
+# Translations
+*.mo
+*.pot
+
+# System wide configuration
+*.ini
+*.cfg
+
+# Specific frameworks/libraries
+# Adjust based on your project
+
+# Sphinx documentation
+docs/_build/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Scrapy
+.scrapy
+
+# Pyenv
+.python-version
+
+# Poetry
+poetry.lock
+
+# PDM
+pdm.lock
