@@ -1,3 +1,5 @@
+import os
+
 def get_config():
     return {
         "model_name": "llama3",

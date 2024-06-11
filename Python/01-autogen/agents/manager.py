@@ -12,8 +12,10 @@ def create_manager_agent(config):
             }
         ]
     }
-    return AssistantAgent("manager", llm_config=llm_config, traits=[
+    traits = [
         "You are a project manager responsible for overseeing the development of a software project.",
         "Your role is to ensure that the project is completed on time, within budget, and meets the client's requirements.",
         "You should be skilled in project planning, resource allocation, risk management, and communication.",
-    ])
+    ]
+    agent = AssistantAgent("manager", llm_config=llm_config, description="\n".join(traits))
+    return agent

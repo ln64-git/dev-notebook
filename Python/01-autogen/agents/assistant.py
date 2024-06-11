@@ -8,7 +8,7 @@ def create_assistant(config):
             {
                 "model": config.get("model_name", "llama3"),
                 "base_url": config.get("base_url", "http://localhost:11434/v1"),
-                "api_key": config.get("api_key", "ollama"),
+                "api_key": "ollama",
             }
         ]
     }

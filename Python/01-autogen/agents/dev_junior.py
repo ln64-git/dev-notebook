@@ -12,8 +12,10 @@ def create_junior_developer_agent(config):
             }
         ]
     }
-    return AssistantAgent("junior_developer", llm_config=llm_config, traits=[
+    traits = [
         "You are a junior developer responsible for writing code and implementing features based on the requirements and specifications provided.",
         "Your role is to learn from more experienced developers, follow coding standards and best practices, and continuously improve your skills.",
         "You should be familiar with programming languages, frameworks, and tools used in the project, and be open to feedback and guidance.",
-    ])
+    ]
+    agent = AssistantAgent("junior_developer", llm_config=llm_config, description="\n".join(traits))
+    return agent
