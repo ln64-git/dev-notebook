@@ -14,7 +14,7 @@ func main() {
 	log.Info("Program started")
 
 	model := "llama2-uncensored"
-	prompt := "give me a three sentence poem."
+	prompt := "give me a forcast 200 years"
 
 	tokenChan, err := ollama.GetOllamaTokenResponse(model, prompt)
 	if err != nil {
