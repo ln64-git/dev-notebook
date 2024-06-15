@@ -1,35 +1,76 @@
 from crewai import Agent
 from textwrap import dedent
-from langchain.llms import OpenAI, Ollama
-from langchain_openai import ChatOpenAI
+from langchain.llms import Ollama
 
-
-# This is an example of how to define custom agents.
-# You can define as many agents as you want.
-# You can also define custom tasks in tasks.py
 class CustomAgents:
     def __init__(self):
-        # self.OpenAIGPT35 = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-        # self.OpenAIGPT4 = ChatOpenAI(model_name="gpt-4", temperature=0.7)
         self.Ollama = Ollama(model="llama3")
 
-    def agent_1_name(self):
+    def architect(self):
         return Agent(
-            role="Define agent 1 role here",
-            backstory=dedent(f"""Define agent 1 backstory here"""),
-            goal=dedent(f"""Define agent 1 goal here"""),
-            # tools=[tool_1, tool_2],
+            role="System Architect",
+            backstory=dedent("""The Architect is responsible for designing the system architecture."""),
+            goal=dedent("""Ensure that the system architecture meets all business and technical requirements."""),
             allow_delegation=False,
             verbose=True,
             llm=self.Ollama,
         )
 
-    def agent_2_name(self):
+    def assistant(self):
         return Agent(
-            role="Define agent 2 role here",
-            backstory=dedent(f"""Define agent 2 backstory here"""),
-            goal=dedent(f"""Define agent 2 goal here"""),
-            # tools=[tool_1, tool_2],
+            role="Administrative Assistant",
+            backstory=dedent("""The Assistant manages schedules, reminders, and communications."""),
+            goal=dedent("""Streamline administrative tasks and support the team efficiently."""),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.Ollama,
+        )
+
+    def junior_developer(self):
+        return Agent(
+            role="Junior Developer",
+            backstory=dedent("""The Junior Developer is responsible for implementing tasks assigned by senior developers and managers."""),
+            goal=dedent("""Complete assigned tasks efficiently and learn from senior team members."""),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.Ollama,
+        )
+
+    def senior_developer(self):
+        return Agent(
+            role="Senior Developer",
+            backstory=dedent("""The Senior Developer oversees the development process and mentors junior developers."""),
+            goal=dedent("""Ensure high-quality code and timely completion of projects."""),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.Ollama,
+        )
+
+    def manager(self):
+        return Agent(
+            role="Project Manager",
+            backstory=dedent("""The Manager coordinates between team members and oversees project progress."""),
+            goal=dedent("""Ensure the project meets its goals and deadlines."""),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.Ollama,
+        )
+
+    def qa_engineer(self):
+        return Agent(
+            role="QA Engineer",
+            backstory=dedent("""The QA Engineer is responsible for testing the software to ensure quality and functionality."""),
+            goal=dedent("""Identify and report bugs, ensure software quality, and verify that all requirements are met."""),
+            allow_delegation=False,
+            verbose=True,
+            llm=self.Ollama,
+        )
+
+    def devops_engineer(self):
+        return Agent(
+            role="DevOps Engineer",
+            backstory=dedent("""The DevOps Engineer is responsible for managing deployment and infrastructure."""),
+            goal=dedent("""Ensure smooth deployment, maintain infrastructure, and improve CI/CD processes."""),
             allow_delegation=False,
             verbose=True,
             llm=self.Ollama,
