@@ -1,31 +1,14 @@
-import { AgentExecutor } from "langchain/agents";
+import { fetchStockData } from "../function/fetchStockData";
+import type { AlpacaError } from "../types/error";
 
 export async function runWorkflow(symbol: string) {
   try {
-
-    
-    // Get current stock data from symbol
-    // Metrics I need
-    // - price,
-    // - volume,
-    // - market cap,
-    // - dividend yield,
-    // - EPS,
-    // - P/E ratio,
-    // - revenue,
-    // - beta,
-    // - volatility,
-    // - price-to-book ratio,
-    // - debt-to-equity ratio,
-    // - profit margin,
-    // - return on equity (ROE),
-    // - current ratio,
-    // - forward P/E ratio,
-    // - trailing P/E ratio,
-    // - earnings growth,
-    // - cash flow
-    // Get latest news articles to symbol
-  } catch (error) {
-    console.error("Error running workflow:", error);
+    const stockMetrics = await fetchStockData(symbol);
+    console.log("stockMetrics: ", stockMetrics);
+    return stockMetrics;
+  } catch (error: any) {
+    const parsedError = JSON.parse(error.message) as AlpacaError;
+    console.error("Error running workflow:", parsedError.message);
+    throw error;
   }
 }

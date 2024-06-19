@@ -1,0 +1,19 @@
+
+  price: number;
+  volume: number;
+  marketCap: number;
+  dividendYield: number;
+  EPS: number;
+  peRatio: number;
+  revenue: number;
+  beta: number;
+  volatility: number;
+  priceToBookRatio: number;
+  debtToEquityRatio: number;
+  profitMargin: number;
+  roe: number;
+  currentRatio: number;
+  forwardPeRatio: number;
+  trailingPeRatio: number;
+  earningsGrowth: number;
+  cashFlow: number;
