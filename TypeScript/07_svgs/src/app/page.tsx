@@ -1,13 +1,21 @@
 import React from "react";
-import FemaleIconNew from "@/icons/female-icon-new";
 import { colors } from "@/utils/utils";
+import MaleIcon from "@/icons/male-icon";
+import FemaleIcon from "@/icons/female-icon";
 
 export default function Home() {
   return (
-    <>
-      {colors.map((color, index) => (
-        <FemaleIconNew key={index} color={color} />
-      ))}
-    </>
+    <div className="flex flex-row">
+      <div className="flex flex-col">
+        {colors.map((color, index) => (
+          <MaleIcon key={index} color={color} />
+        ))}
+      </div>
+      <div className="flex flex-col">
+        {colors.map((color, index) => (
+          <FemaleIcon key={index} color={color} />
+        ))}
+      </div>
+    </div>
   );
 }

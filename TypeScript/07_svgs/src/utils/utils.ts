@@ -12,7 +12,7 @@ export const colors = [
   "#d908fe",
 ];
 
-export const generateGradient = (baseColor) => {
+export const generateGradient = (baseColor: string) => {
   try {
     const scale = chroma.scale([baseColor, "#ffffff"]).colors(5);
     return scale;
