@@ -2,5 +2,6 @@
     "files.associations": {
         "cstdlib": "cpp",
         "iostream": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/ln64/Source/dev/C++/00_DiscordTrackSkip"
 }
